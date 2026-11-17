@@ -23,7 +23,7 @@ jobs:
       EVAL_SPEC: config/metric_spec.yaml
       # Committed by the team after M4 (re-run on main, never hand-edited).
       EVAL_BASELINE: reports/baseline_v1.json
-      EVAL_BASE_SPEC: ${{ runner.temp }}/base_metric_spec_v1.yaml
+      EVAL_BASE_SPEC: ${{ github.workspace }}/base_metric_spec_v1.yaml
       BASE_REVISION: ${{ github.event.pull_request.base.sha || github.sha }}
     defaults: {run: {working-directory: src}}
     steps:
@@ -73,7 +73,7 @@ jobs:
     env:
       PYTHONUTF8: "1"
       EVAL_SPEC: config/metric_spec_v2.yaml
-      EVAL_BASE_SPEC: ${{ runner.temp }}/base_metric_spec_v2.yaml
+      EVAL_BASE_SPEC: ${{ github.workspace }}/base_metric_spec_v2.yaml
       BASE_REVISION: ${{ github.event.pull_request.base.sha || github.sha }}
     defaults: {run: {working-directory: src}}
     steps:
