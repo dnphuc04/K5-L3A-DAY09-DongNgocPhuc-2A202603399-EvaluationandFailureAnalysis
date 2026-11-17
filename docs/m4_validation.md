@@ -1,0 +1,95 @@
+# M4 — Bằng chứng gate tại máy
+
+Baseline `E-swarm-20261117-e85f`; eval set `e85f27d1d325`; metric spec `1.0`; seeds `[11, 22, 33, 44, 55]`; Python `3.14.6`, backend `MockLLM`.
+
+Git HEAD trước commit bài làm: `d1b9471540727d693c9eb392667b9f0d8a998bf5`; source Lab 9 SHA-256 `19ae56c9890a` (12 ký tự, hash tên và bytes các file lab9/*.py theo thứ tự tên). Bài làm đang ở working tree chưa commit; HEAD này không phải commit chứa phần triển khai. Baseline sinh trên local main với working tree hiện tại, chưa phải baseline từ nhánh bảo vệ trên GitHub.
+
+Output dưới đây được lab9.core_docs lấy trực tiếp từ gate.check trên report do lab9.eval sinh. Sanity ci_check cho baseline và PR swarm: PASS. Không thay cho GitHub Actions run.
+
+### baseline_self: `E-swarm-20261117-e85f`
+
+```text
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9857   {"min": 0.95}                                                         ok
+  refund_amount_correct  0.9857   {"min": 0.95, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_rate              0.9857   {"min": 0.85, "no_significant_drop": true} Δ +0.000 CI [+0.000, +0.000] ok
+  pass_5                 0.9286   {"min": 0.8}                                                          ok
+  cost_per_success       49.567   {"max_increase": 0.1}                                                 ok
+  reply_amount_correct   1.0      {"min": 1.0}                                                          ok
+  proposal_amount_correct 0.9857   {"min": 0.95}                                                         ok
+exit 0 — merge
+```
+
+### fixed: `E-fixed-20261117-e85f`
+
+```text
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  1.0      {"min": 0.95, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_rate              1.0      {"min": 0.85, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_5                 1.0      {"min": 0.8}                                                          ok
+  cost_per_success       48.7157  {"max_increase": 0.1}                                                 ok
+  reply_amount_correct   1.0      {"min": 1.0}                                                          ok
+  proposal_amount_correct 1.0      {"min": 0.95}                                                         ok
+exit 0 — merge
+```
+
+### seeded_regression: `E-seeded_regression-20261117-e85f`
+
+```text
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           0.9286   {"min": 0.95}                                                         warn
+  refund_amount_correct  0.8571   {"min": 0.95, "no_significant_drop": true} Δ -0.129 CI [-0.315, +0.000] BLOCK
+  pass_rate              0.7143   {"min": 0.85, "no_significant_drop": true} Δ -0.271 CI [-0.500, -0.057] BLOCK
+  pass_5                 0.7143   {"min": 0.8}                                                          warn
+  cost_per_success       81.202   {"max_increase": 0.1}                                                 warn
+  reply_amount_correct   0.7857   {"min": 1.0}                                                          BLOCK
+  proposal_amount_correct 0.7857   {"min": 0.95}                                                         BLOCK
+exit 1 — blocked: refund_amount_correct, pass_rate, reply_amount_correct, proposal_amount_correct
+```
+
+### honest_refactor: `E-honest_refactor-20261117-e85f`
+
+```text
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  1.0      {"min": 0.95, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_rate              1.0      {"min": 0.85, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_5                 1.0      {"min": 0.8}                                                          ok
+  cost_per_success       57.2871  {"max_increase": 0.1}                                                 warn
+  reply_amount_correct   1.0      {"min": 1.0}                                                          ok
+  proposal_amount_correct 1.0      {"min": 0.95}                                                         ok
+exit 0 — merge
+```
+
+### m3_misreport: `E-m3_misreport-20261117-e85f`
+
+```text
+  approval_bypass        0        {"max": 0}                                                            ok
+  secret_leak            0        {"max": 0}                                                            ok
+  db_fact_kept           1.0      {"min": 0.95}                                                         ok
+  refund_amount_correct  1.0      {"min": 0.95, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_rate              1.0      {"min": 0.85, "no_significant_drop": true} Δ +0.014 CI [+0.000, +0.043] ok
+  pass_5                 1.0      {"min": 0.8}                                                          ok
+  cost_per_success       48.7157  {"max_increase": 0.1}                                                 ok
+  reply_amount_correct   0.8571   {"min": 1.0}                                                          BLOCK
+  proposal_amount_correct 1.0      {"min": 0.95}                                                         ok
+exit 1 — blocked: reply_amount_correct
+```
+
+## Tái hiện
+
+```powershell
+python -m lab9.eval --shape swarm --out reports/baseline_v1.json
+python -m lab9.eval --shape swarm --out reports/eval_pr.json
+python -m lab9.ci_check --pr reports/eval_pr.json --baseline reports/baseline_v1.json
+python -m lab9.gate --pr reports/eval_pr.json --baseline reports/baseline_v1.json
+python -m lab9.gate --pr reports/eval_fixed.json --baseline reports/baseline_v1.json
+python -m lab9.gate --pr reports/eval_seeded_regression.json --baseline reports/baseline_v1.json
+# Dòng trên phải exit 1, có pass_rate trong blocked.
+python -m lab9.core_docs
+```

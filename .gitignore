@@ -1,5 +1,24 @@
 __pycache__/
 *.pyc
-src/reports/
+src/reports/*
+!src/reports/baseline_v1.json
+!src/reports/eval_fixed.json
+!src/reports/eval_seeded_regression.json
+!src/reports/eval_honest_refactor.json
+!src/reports/eval_m3_misreport.json
+!src/reports/eval_pr.json
+!src/reports/baseline_v2.json
+!src/reports/eval_*_v2.json
 src/traces/
 *.sqlite
+# Local environment and secrets
+.venv/
+.pytest_cache/
+.env
+.env.*
+!.env.example
+src/eval/instructor/
+/instructor/
+/__MACOSX/
+*.sqlite-*
+src/student_drop/

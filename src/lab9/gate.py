@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 from lab8.console import utf8_stdio
@@ -33,8 +34,9 @@ def integrity_check(pr: dict, base: dict, spec: dict, base_spec: dict | None = N
         including dropping no_significant_drop)
       - an item's slice tags in PR rows differ from the baseline's (relabelling an item out of a
         slice hides its regression from the slice gate)"""
-    # TODO M7
-    return []
+    from lab9.integrity import validate_reports
+
+    return validate_reports(pr, base, spec, base_spec)
 
 
 def slice_check(pr: dict, base: dict, spec: dict) -> tuple[list[str], list[str]]:
@@ -44,13 +46,42 @@ def slice_check(pr: dict, base: dict, spec: dict) -> tuple[list[str], list[str]]
       - fail if below "min", or if no_significant_drop and the paired CI over the slice's items
         lies entirely below 0
     Return (blocked ids like "slice:money_movement/pass_rate", report lines)."""
-    # TODO M5
-    return [], []
+    blocked, lines = [], []
+    bs = spec.get("bootstrap", {})
+    for rule in spec.get("slices", []):
+        name, metric = rule["name"], rule["metric"]
+        sid = f"slice:{name}/{metric}"
+        a = per_item(pr, metric, slice_name=name)
+        b = per_item(base, metric, slice_name=name)
+        value, note = None, ""
+        if not a or a.keys() != b.keys() or not all(math.isfinite(v) for v in (*a.values(), *b.values())):
+            verdict = "MISSING"
+            note = "missing, nonfinite, or unmatched slice items"
+        else:
+            value = sum(a.values()) / len(a)
+            verdict = "ok"
+            if ("min" in rule and value < rule["min"]) or ("max" in rule and value > rule["max"]):
+                verdict = "fail"
+            if rule.get("no_significant_drop"):
+                keys = sorted(a)
+                try:
+                    delta, lo, hi = stats.paired_bootstrap(
+                        [a[k] for k in keys], [b[k] for k in keys],
+                        n_resamples=bs.get("n_resamples", 1000), rng=bs.get("rng", 2027),
+                        confidence=bs.get("confidence", 0.95))
+                    note = f"Δ {delta:+.3f} CI [{lo:+.3f}, {hi:+.3f}]"
+                    if hi < 0:
+                        verdict = "fail"
+                except ValueError as exc:
+                    verdict, note = "MISSING", str(exc)
+        if verdict != "ok" and rule.get("blocking"):
+            blocked.append(sid)
+        label = "BLOCK" if verdict != "ok" and rule.get("blocking") else ("warn" if verdict != "ok" else "ok")
+        lines.append(f"  {sid:<38} {str(value):<8} n={len(a):<3} {note:<35} {label}")
+    return blocked, lines
 
 
 def check(pr: dict, base: dict, spec: dict, base_spec: dict | None = None) -> tuple[list[str], list[str]]:
-    if pr["manifest"]["eval_set_sha"] != base["manifest"]["eval_set_sha"]:
-        return ["eval_set_sha"], ["  EVAL SET differs from the baseline's: re-run the baseline on the same eval set"]
     problems = integrity_check(pr, base, spec, base_spec)
     if problems:
         return ["integrity"], [f"  INTEGRITY {p}" for p in problems]
@@ -72,7 +103,8 @@ def check(pr: dict, base: dict, spec: dict, base_spec: dict | None = None) -> tu
             a, b = per_item(pr, mid), per_item(base, mid)
             keys = sorted(set(a) & set(b))
             d, lo, hi = stats.paired_bootstrap([a[k] for k in keys], [b[k] for k in keys],
-                                               n_resamples=bs.get("n_resamples", 1000), rng=bs.get("rng", 2027))
+                                               n_resamples=bs.get("n_resamples", 1000), rng=bs.get("rng", 2027),
+                                               confidence=bs.get("confidence", 0.95))
             note = f"Δ {d:+.3f} CI [{lo:+.3f}, {hi:+.3f}]"
             if hi < 0:
                 verdict = "fail"

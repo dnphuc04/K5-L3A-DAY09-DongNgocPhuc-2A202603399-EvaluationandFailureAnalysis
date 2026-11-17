@@ -1,7 +1,15 @@
-# Nộp bài (hạn 23:59 cùng ngày)
-PR từ `starter/d09` → `main` của repo nhóm. Chấm commit cuối trước 23:59; commit sau hạn không tính.
+# Nộp bài (cập nhật theo thông báo Day 09)
+
+Hạn mới: **12:00 trưa 18/11/2026 (UTC+7)**. Giảng viên chấm **nhánh `main` trong repo fork của học viên**. Thông báo này thay thế hạn cũ trong README/RUBRIC/CHECKPOINTS.
+
+Nếu dùng PR, mở `starter/d09` → `main` ngay trong repo fork rồi merge; không mở PR vào repo gốc VinUni-AI20k. Nếu đã nộp link PR trên LMS, giữ nguyên nhánh sau khi merge. Đã nộp link repo/PR thì không cần nộp lại LMS, chỉ cần cập nhật repo trước hạn.
+
+Code, dữ liệu, tài liệu và report bắt buộc phải được commit, push và có trên `main`; file chỉ tồn tại local chưa được tính là đã nộp. `.gitignore` hiện cho phép các report nộp bài; kiểm tra bằng `git ls-files src/reports` sau khi stage/commit. Không sửa tay report.
 
 ## Core (nên xong trước 17:00)
+
+Kiểm tra local ngày 17/11/2026: toàn bộ **721 test PASS** bằng `python -m pytest -q -o addopts=`. Fixture khôi phục registry shape sau mỗi test để các variant Lab 9 không ảnh hưởng test hợp đồng Lab 8; không chỉnh code `src/lab8/`. Core/Advanced theo workflow đã lần lượt đạt 116/12 test; gate Core cho `fixed` qua và chặn `seeded_regression`; mutation v2 3/3, 0 báo nhầm; A/A mọi Δ=0 và 4/4 trap công khai bị chặn. Chưa chạy bộ chấm ẩn hoặc xác nhận GitHub Actions xanh. Bằng chứng chi tiết: `docs/m3_graders.md`, `docs/m4_validation.md` đến `docs/m7_validation.md`.
+
 - [ ] `src/lab9/{stats,graders,evalset}.py` đã hoàn thành TODO M1–M4
 - [ ] `src/data/eval/eval_set_v1.jsonl` có `failure_modes`, `labels_v1.json` tách riêng
 - [ ] `docs/failure_taxonomy.md`, `docs/trace_case.md` (1 case + regression test), `docs/judge_audit.md`, `docs/eval_card.md`, `docs/PRD_v1.1.md`
