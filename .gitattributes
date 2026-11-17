@@ -1,0 +1,4 @@
+# Baselines hash raw eval-set bytes generated with CRLF on Windows.
+# Preserve those bytes on Linux CI too; do not rewrite reports or weaken integrity.
+src/data/eval/eval_set_v1.jsonl text eol=crlf
+src/data/eval/eval_set_v2.jsonl text eol=crlf
