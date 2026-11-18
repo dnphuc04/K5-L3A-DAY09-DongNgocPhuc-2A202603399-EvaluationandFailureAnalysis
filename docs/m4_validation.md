@@ -2,11 +2,11 @@
 
 ## Tái lập giữa Windows và Linux
 
-`lab9.evalset.sha12` hash bytes gốc của eval set. Baseline hiện tại sinh từ file CRLF trên Windows; checkout LF trên Linux cho hash khác dù item không đổi. `.gitattributes` cố định `eol=crlf` cho đúng hai file eval_set_v1/v2.jsonl để checkout trên hai hệ điều hành giữ cùng bytes và hash. Không sửa report, không bỏ kiểm integrity. GitHub Actions run 44123715751 đã phát hiện khác biệt này; cần chạy lại sau khi commit cấu hình xuống dòng.
+`lab9.evalset.sha12` hash bytes gốc của eval set. Baseline hiện tại sinh từ file CRLF trên Windows; checkout LF trên Linux cho hash khác dù item không đổi. `.gitattributes` cố định `eol=crlf` cho đúng hai file eval_set_v1/v2.jsonl để checkout trên hai hệ điều hành giữ cùng bytes và hash. Không sửa report, không bỏ kiểm integrity. GitHub Actions run 44123715751 đã phát hiện khác biệt này; đã khắc phục ở `c21d5fc` và xác nhận cả hai job xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967).
 
 Baseline `E-swarm-20261117-e85f`; eval set `e85f27d1d325`; metric spec `1.0`; seeds `[11, 22, 33, 44, 55]`; Python `3.14.6`, backend `MockLLM`.
 
-Git HEAD trước commit bài làm: `d1b9471540727d693c9eb392667b9f0d8a998bf5`; source Lab 9 SHA-256 `19ae56c9890a` (12 ký tự, hash tên và bytes các file lab9/*.py theo thứ tự tên). Bài làm đang ở working tree chưa commit; HEAD này không phải commit chứa phần triển khai. Baseline sinh trên local main với working tree hiện tại, chưa phải baseline từ nhánh bảo vệ trên GitHub.
+Git HEAD trước commit bài làm: `d1b9471540727d693c9eb392667b9f0d8a998bf5`; source Lab 9 SHA-256 `19ae56c9890a` (12 ký tự, hash tên và bytes các file lab9/*.py theo thứ tự tên). Đây là thông tin provenance tại lúc sinh baseline, trước commit triển khai. Bài làm và baseline sau đó đã được commit trong `502fd5d`; main tại `c21d5fc` đã được CI Linux kiểm tra thành công. Baseline ban đầu sinh tại local, không phải trên nhánh bảo vệ.
 
 Output dưới đây được lab9.core_docs lấy trực tiếp từ gate.check trên report do lab9.eval sinh. Sanity ci_check cho baseline và PR swarm: PASS. Không thay cho GitHub Actions run.
 

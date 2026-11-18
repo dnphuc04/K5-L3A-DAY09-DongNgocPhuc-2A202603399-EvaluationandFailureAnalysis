@@ -4,7 +4,7 @@ Bổ sung định nghĩa chạy đúng và cổng release cho tính năng Lab 8.
 
 Baseline `E-swarm-20261117-e85f`; eval set `e85f27d1d325`; metric spec `1.0`; seeds `[11, 22, 33, 44, 55]`; Python `3.14.6`, backend `MockLLM`.
 
-Git HEAD trước commit bài làm: `d1b9471540727d693c9eb392667b9f0d8a998bf5`; source Lab 9 SHA-256 `19ae56c9890a` (12 ký tự, hash tên và bytes các file lab9/*.py theo thứ tự tên). Bài làm đang ở working tree chưa commit; HEAD này không phải commit chứa phần triển khai. Baseline sinh trên local main với working tree hiện tại, chưa phải baseline từ nhánh bảo vệ trên GitHub.
+Git HEAD trước commit bài làm: `d1b9471540727d693c9eb392667b9f0d8a998bf5`; source Lab 9 SHA-256 `19ae56c9890a` (12 ký tự, hash tên và bytes các file lab9/*.py theo thứ tự tên). Đây là thông tin provenance tại lúc sinh baseline, trước commit triển khai. Bài làm và baseline sau đó đã được commit trong `502fd5d`; main tại `c21d5fc` đã được CI Linux kiểm tra thành công. Baseline ban đầu sinh tại local, không phải trên nhánh bảo vệ.
 
 ## Phạm vi pilot
 
@@ -55,7 +55,7 @@ Lệnh từ src/: `python -m lab9.gate --pr reports/eval_<shape>.json --baseline
 
 Eval owner dự kiến: DongNgocPhuc (người nộp bài); Product/reviewer cần xác nhận vai trò khi mở PR.
 
-Baseline phải được commit cùng bài làm; sau khi thiết lập nhánh bảo vệ cần tái sinh trên main đã có M1–M3. Workflow eval-gate dùng cùng spec/baseline cho PR swarm, fixed và seeded_regression. Workflow kích hoạt bởi pull_request hoặc workflow_dispatch, không phải push main. harness_map.yaml đã có sections.eval. Hiện chưa chạy GitHub Actions.
+Baseline phải được commit cùng bài làm; sau khi thiết lập nhánh bảo vệ cần tái sinh trên main đã có M1–M3. Workflow eval-gate dùng cùng spec/baseline cho PR swarm, fixed và seeded_regression. Workflow kích hoạt bởi pull_request hoặc workflow_dispatch, không phải push main. harness_map.yaml đã có sections.eval. Cả hai job đã xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967), commit `c21d5fc`.
 
 ## Rủi ro và bằng chứng còn thiếu
 
@@ -67,7 +67,7 @@ Baseline phải được commit cùng bài làm; sau khi thiết lập nhánh b�
 - Parser tiền giới hạn theo mẫu VND công khai; xem [M3](m3_graders.md).
 - Bảng Core v1 dùng eval set v1; tiến độ slice/reliability/integrity v2 ghi riêng ở M5–M7.
 - Năm anchor giảng viên chưa được xác nhận; các anchor hiện tại được chọn từ replay công khai.
-- Chưa push/mở PR, chưa có GitHub Actions run xanh; kiểm tra hiện tại là local tương ứng workflow.
+- Main tại `c21d5fc` đã push và cả `eval-gate`, `eval-gate-v2` đều xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967). Kết quả này thuộc main ở commit đó; PR tài liệu mới cần có lần CI riêng.
 
 ## Khi nào lên phiên bản tiếp
 

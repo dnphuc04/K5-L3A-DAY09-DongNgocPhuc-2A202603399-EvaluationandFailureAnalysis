@@ -14,7 +14,7 @@ Slice regression: pass_rate tổng 0.9357; vượt sàn tổng và CI tổng ch�
 
 Ngưỡng M5: money_movement/adversarial/denial đều min=0.90, blocking, no_significant_drop. Metric reply_amount_correct giữ min=1.0. ProposalAmountCorrect của v2 chọn min=0.90 đồng bộ sàn tiền v2 trong lần thiết lập baseline v2 đầu tiên; v1 giữ nguyên 0.95. Đây là khởi tạo ngưỡng cho eval-set version mới, chưa có baseline v2 trước đó; từ baseline này không nới ngưỡng trên cùng version.
 
-M6 đã cài pass_at_k/pass_hat_k, thêm pass_hat_5 blocking và tái sinh baseline bằng spec 2.1; xem [M6](m6_validation.md). Integrity/ratchet và trap công khai đã kiểm ở [M7](m7_validation.md); GitHub Actions chưa chạy.
+M6 đã cài pass_at_k/pass_hat_k, thêm pass_hat_5 blocking và tái sinh baseline bằng spec 2.1; xem [M6](m6_validation.md). Integrity/ratchet và trap công khai đã kiểm ở [M7](m7_validation.md); Cả hai job đã xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967), commit `c21d5fc`.
 
 Giới hạn cỡ mẫu: 28 item vẫn nhỏ; 5 seed không đảm bảo phát hiện ổn định bug chỉ xuất hiện 1/3 seed. Chưa có kết quả người dùng/model thật. Xem [bằng chứng M5](m5_validation.md).
 

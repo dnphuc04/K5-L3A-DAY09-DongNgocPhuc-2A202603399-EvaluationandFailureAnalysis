@@ -17,7 +17,7 @@ Ratchet cần **--base-spec từ nguồn tin cậy**: trên cùng eval-set versi
 
 Scorecard công khai giữ 3/3 regression bị chặn, 0 báo nhầm; baseline tự so merge. Đối chứng quiet_override không ghi model_override, db_fact_kept vẫn 1.0, nhưng bị gate chặn qua tiền/proposal và slice. Đây là phép thử bổ sung bằng công tắc công khai, không phải variant ẩn giảng viên.
 
-Chưa push/mở PR nên chưa có GitHub Actions run xanh. Test/trap ẩn giảng viên chưa được chạy. Tính nhất quán report không chứng minh rows là thật nếu kẻ sửa có thể đồng thời giả rows, totals và baseline: vẫn cần rerun từ CI tin cậy, bảo vệ baseline/spec và review thay đổi evaluator/workflow. Chưa có chữ ký artifact hoặc dữ liệu held-out mới. Xem [bằng chứng M7](m7_validation.md).
+Main tại `c21d5fc` đã push; cả hai job đã xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967). Test/trap ẩn giảng viên chưa được chạy. Tính nhất quán report không chứng minh rows là thật nếu kẻ sửa có thể đồng thời giả rows, totals và baseline: vẫn cần rerun từ CI tin cậy, bảo vệ baseline/spec và review thay đổi evaluator/workflow. Chưa có chữ ký artifact hoặc dữ liệu held-out mới. Xem [bằng chứng M7](m7_validation.md).
 
 ## Thử thêm trên report xanh
 
