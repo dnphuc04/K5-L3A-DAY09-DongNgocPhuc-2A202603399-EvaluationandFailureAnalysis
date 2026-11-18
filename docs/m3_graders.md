@@ -34,7 +34,7 @@ Lệnh chính thức `python -m lab9.mutation --detect` trả exit 0:
 detection 100.00% (target >=80%) · false alarms 0.00% (target <=10%)
 ```
 
-Mẫu số detection là 20 trial seeded_regression fail pass_rate; cả 20 có ít nhất một grader khác giải thích lỗi. False alarm là 0/70 trial fixed. Đây là detection theo định nghĩa script, không phải tuyên bố bắt được mọi lỗi ẩn hay model thật. Gate/bootstrap M4 đã hoàn thành tại local; xem [bằng chứng M4](m4_validation.md). GitHub Actions chưa được xác nhận.
+Mẫu số detection là 20 trial seeded_regression fail pass_rate; cả 20 có ít nhất một grader khác giải thích lỗi. False alarm là 0/70 trial fixed. Đây là detection theo định nghĩa script, không phải tuyên bố bắt được mọi lỗi ẩn hay model thật. Gate/bootstrap M4 đã hoàn thành tại local; xem [bằng chứng M4](m4_validation.md). Job Core đã xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967), commit `c21d5fc`.
 
 ## Test và giới hạn metric reply
 

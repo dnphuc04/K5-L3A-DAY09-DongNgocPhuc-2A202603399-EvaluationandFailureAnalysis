@@ -2,7 +2,7 @@
 
 Baseline `E-swarm-20261117-e85f`; eval set `e85f27d1d325`; metric spec `1.0`; seeds `[11, 22, 33, 44, 55]`; Python `3.14.6`, backend `MockLLM`.
 
-Git HEAD trước commit bài làm: `d1b9471540727d693c9eb392667b9f0d8a998bf5`; source Lab 9 SHA-256 `19ae56c9890a` (12 ký tự, hash tên và bytes các file lab9/*.py theo thứ tự tên). Bài làm đang ở working tree chưa commit; HEAD này không phải commit chứa phần triển khai. Baseline sinh trên local main với working tree hiện tại, chưa phải baseline từ nhánh bảo vệ trên GitHub.
+Git HEAD trước commit bài làm: `d1b9471540727d693c9eb392667b9f0d8a998bf5`; source Lab 9 SHA-256 `19ae56c9890a` (12 ký tự, hash tên và bytes các file lab9/*.py theo thứ tự tên). Đây là thông tin provenance tại lúc sinh baseline, trước commit triển khai. Bài làm và baseline sau đó đã được commit trong `502fd5d`; main tại `c21d5fc` đã được CI Linux kiểm tra thành công. Baseline ban đầu sinh tại local, không phải trên nhánh bảo vệ.
 
 ## Phạm vi và người chịu trách nhiệm
 
@@ -51,7 +51,7 @@ Tone: κ=0.757, P=0.857, R=0.8 — PASS calibration. Helpful: κ=0.375, P=1.0, R
 - Parser tiền giới hạn theo mẫu VND công khai; xem [M3](m3_graders.md).
 - Bảng Core v1 dùng eval set v1; tiến độ slice/reliability/integrity v2 ghi riêng ở M5–M7.
 - Năm anchor giảng viên chưa được xác nhận; các anchor hiện tại được chọn từ replay công khai.
-- Chưa push/mở PR, chưa có GitHub Actions run xanh; kiểm tra hiện tại là local tương ứng workflow.
+- Main tại `c21d5fc` đã push và cả `eval-gate`, `eval-gate-v2` đều xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967). Kết quả này thuộc main ở commit đó; PR tài liệu mới cần có lần CI riêng.
 
 ## Khi nào tăng phiên bản
 
@@ -71,7 +71,7 @@ Slice regression: pass_rate tổng 0.9357; vượt sàn tổng và CI tổng ch�
 
 Ngưỡng M5: money_movement/adversarial/denial đều min=0.90, blocking, no_significant_drop. Metric reply_amount_correct giữ min=1.0. ProposalAmountCorrect của v2 chọn min=0.90 đồng bộ sàn tiền v2 trong lần thiết lập baseline v2 đầu tiên; v1 giữ nguyên 0.95. Đây là khởi tạo ngưỡng cho eval-set version mới, chưa có baseline v2 trước đó; từ baseline này không nới ngưỡng trên cùng version.
 
-M6 đã cài pass_at_k/pass_hat_k, thêm pass_hat_5 blocking và tái sinh baseline bằng spec 2.1; xem [M6](m6_validation.md). Integrity/ratchet và trap công khai đã kiểm ở [M7](m7_validation.md); GitHub Actions chưa chạy.
+M6 đã cài pass_at_k/pass_hat_k, thêm pass_hat_5 blocking và tái sinh baseline bằng spec 2.1; xem [M6](m6_validation.md). Integrity/ratchet và trap công khai đã kiểm ở [M7](m7_validation.md); Cả hai job đã xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967), commit `c21d5fc`.
 
 Giới hạn cỡ mẫu: 28 item vẫn nhỏ; 5 seed không đảm bảo phát hiện ổn định bug chỉ xuất hiện 1/3 seed. Chưa có kết quả người dùng/model thật. Xem [bằng chứng M5](m5_validation.md).
 
@@ -115,4 +115,4 @@ Ratchet cần **--base-spec từ nguồn tin cậy**: trên cùng eval-set versi
 
 Scorecard công khai giữ 3/3 regression bị chặn, 0 báo nhầm; baseline tự so merge. Đối chứng quiet_override không ghi model_override, db_fact_kept vẫn 1.0, nhưng bị gate chặn qua tiền/proposal và slice. Đây là phép thử bổ sung bằng công tắc công khai, không phải variant ẩn giảng viên.
 
-Chưa push/mở PR nên chưa có GitHub Actions run xanh. Test/trap ẩn giảng viên chưa được chạy. Tính nhất quán report không chứng minh rows là thật nếu kẻ sửa có thể đồng thời giả rows, totals và baseline: vẫn cần rerun từ CI tin cậy, bảo vệ baseline/spec và review thay đổi evaluator/workflow. Chưa có chữ ký artifact hoặc dữ liệu held-out mới. Xem [bằng chứng M7](m7_validation.md).
+Main tại `c21d5fc` đã push; cả hai job đã xanh trên [GitHub Actions run 44124235967](https://github.com/dnphuc04/K5-L3A-DAY09-DongNgocPhuc-2A202603399-EvaluationandFailureAnalysis/actions/runs/44124235967). Test/trap ẩn giảng viên chưa được chạy. Tính nhất quán report không chứng minh rows là thật nếu kẻ sửa có thể đồng thời giả rows, totals và baseline: vẫn cần rerun từ CI tin cậy, bảo vệ baseline/spec và review thay đổi evaluator/workflow. Chưa có chữ ký artifact hoặc dữ liệu held-out mới. Xem [bằng chứng M7](m7_validation.md).
